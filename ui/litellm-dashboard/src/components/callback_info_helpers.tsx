@@ -3,7 +3,7 @@ interface CallbackConfig {
   displayName: string;
   logo: string;
   supports_key_team_logging: boolean;
-  dynamic_params: Record<string, "text" | "password" | "select" | "upload" | "number">;
+  dynamic_params: Record<string, "text" | "password" | "select" | "upload" | "number" | "credential">;
   description: string;
 }
 
@@ -97,10 +97,10 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
     displayName: "Langfuse OTEL",
     logo: `${asset_logos_folder}langfuse.png`,
     supports_key_team_logging: true,
+    // The destination is admin-owned: bind a named credential (host + keys live
+    // in the LLM Credentials registry) instead of typing keys into the request path.
     dynamic_params: {
-      langfuse_public_key: "text",
-      langfuse_secret_key: "password",
-      langfuse_host: "text",
+      litellm_logging_credential_name: "credential",
     },
     description: "Langfuse v3 OTEL Logging Integration",
   },
